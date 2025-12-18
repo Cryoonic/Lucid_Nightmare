@@ -1,25 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour
 {
-    // Start is called before the first frame update
-    bool paused = false;
+    public GameObject pausePanel;
+    private bool isPaused = false;
 
-    public void pausegame()
+    void Start()
     {
-        if (paused)
-        {
-            Time.timeScale = 1;
-            AudioListener.pause = false;
-            paused = false;
-        }
-        else
-        {
-            Time.timeScale = 0;
-            AudioListener.pause = true;
-            paused = true;
-        }
+        pausePanel.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void PauseGame()
+    {
+        pausePanel.SetActive(true);
+        Time.timeScale = 0f;
+        AudioListener.pause = true;
+        isPaused = true;
+    }
+
+    public void ResumeGame()
+    {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        isPaused = false;
+    }
+
+    public void BackToMenu()
+    {
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        SceneManager.LoadScene("StartMenu");
     }
 }
